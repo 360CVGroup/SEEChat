@@ -18,7 +18,9 @@
 ---
 ## 技术方案
 SEEChat基于单模态专家缝合路线，通过可学习的桥接层将视觉模态的专家模型与文本模态的专家模型进行缝合，形成具备视觉理解能力的多模态对话模型。
-<img src="doc/img/MLLM model structure.png" alt= “MLLMmodel” width="530" height="400">
+
+<img src="doc/img/MLLM model structure.png" alt= “MLLMmodel” width="500" height="180">
+
 开源V1.0版本的SEEChat，视觉模态基于CLIP-ViT，文本模态基于ChatGLM，可学习的桥接层参考[BLIP-2](https://arxiv.org/abs/2301.12597)以及[LLAVA](https://llava-vl.github.io/)等前期工作，进行如下的两阶段训练：
 * Stage I 图文对齐: 使用360人工智能研究院开源的[Zero](https://zero.so.com)数据集，共计2300万图文对桥接层进行训练
 * Stage II 人机对齐：使用[LLAVA](https://llava-vl.github.io/)开源的158K instruction数据经翻译后，对桥接层和语言模型部分进行微调
