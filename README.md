@@ -50,10 +50,10 @@ sh demo_stage2.sh
 
 ## 相关工作
 ### 中文
-* [X-LLM](https://x-llm.github.io/):5月7日公开，由中科院自动化所研发的中文多模态对话模型
-* [VisualGLM](https://github.com/THUDM/VisualGLM-6B):5月18日公开，由清华大学KEG组研发的中文多模态对话模型
+* [X-LLM](https://x-llm.github.io/): 5月7日公开，由中科院自动化所研发的中文多模态对话模型
+* [VisualGLM](https://github.com/THUDM/VisualGLM-6B): 5月18日公开，由清华大学KEG组研发的中文多模态对话模型
 * [mPLUG-Owl](https://github.com/X-PLUG/mPLUG-Owl): 4月26日公开，由阿里达摩院发布了一个基于预训练和微调的多模态大模型
 ### 英文
-* [BLIP-2](https://github.com/salesforce/LAVIS):salesforce公司开源的多模态模型
-* [LLaVA](https://github.com/haotian-liu/LLaVA):4月17日公开，由威斯康星大学麦迪逊分校，微软研究院和哥伦比亚大学发布的指令微调模型
-* [MiniGPT-4](https://github.com/Vision-CAIR/MiniGPT-4):4月19日，由King Abdullah University of Science and Technology的多模态对话模型
+* [BLIP-2](https://github.com/salesforce/LAVIS): salesforce公司开源的多模态模型
+* [LLaVA](https://github.com/haotian-liu/LLaVA): 4月17日公开，由威斯康星大学麦迪逊分校，微软研究院和哥伦比亚大学发布的指令微调模型
+* [MiniGPT-4](https://github.com/Vision-CAIR/MiniGPT-4): 4月19日，由King Abdullah University of Science and Technology的多模态对话模型
