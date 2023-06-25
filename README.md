@@ -55,5 +55,5 @@ sh demo_stage2.sh
 * [mPLUG-Owl](https://github.com/X-PLUG/mPLUG-Owl): 4月26日公开，由阿里达摩院发布了一个基于预训练和微调的多模态大模型
 ### 英文
 * [BLIP-2](https://github.com/salesforce/LAVIS) salesforce公司开源的多模态模型
-* [llama](https://github.com/facebookresearch/llama) 2月24日公开，Facebook母公司Meta发布的人工智能大型语言模型
+* [LLaVA](https://github.com/haotian-liu/LLaVA) 4月17日公开，由威斯康星大学麦迪逊分校，微软研究院和哥伦比亚大学发布的指令微调模型
 * [MiniGPT-4](https://github.com/Vision-CAIR/MiniGPT-4)：4月19日，由King Abdullah University of Science and Technology的多模态对话模型
