@@ -45,7 +45,7 @@ sh demo_stage2.sh
 
 启动后，即将开始一轮对话。当命令行显示“question”时，用户可以在终端输入问题，由seechat回答。当输入“break”时，本轮对话结束，进行下一轮对话。
 实测效果如下：
-<img src="./doc/img/round_dialog.png" alt= “round” width="1650" height="268">
+<img src="./doc/img/round_dialog.png" alt= “round” width="1650" height="260">
 
 
 ## 相关工作
