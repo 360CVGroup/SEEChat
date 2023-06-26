@@ -1,0 +1,6 @@
+datasets:
+  r2d2:
+    data_type: images
+    build_info:
+      storage: /path_to/dataset/R2D2dataset/my_data800w/{00000..00822}.tar
+      

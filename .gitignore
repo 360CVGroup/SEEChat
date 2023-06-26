@@ -1,13 +1,8 @@
-.idea
-.pyc
-.cache
-__pycache__
-build
-site
-.DS_Store
+*.pyc 
+*.jpg
+*.bin
+*.model
+*.pth
 
-/file
-/notes
-/contribs
-/notebooks
-/logs
+test_ckpt/
+images/
