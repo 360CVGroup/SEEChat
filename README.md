@@ -2,7 +2,6 @@
 * “一见”取义自“百闻不如一见”，是一个侧重视觉能力的多模态对话大模型，基于单模态专家缝合路线（Single-modal Experts Efficient integration, SEEChat）。
 * SEEChat项目的重点是将视觉能力与文本对话能力相集成，长期目标是赋予模型以文本/对话的方式解决视觉任务（图像理解，目标检测，跨模态，开放集）的能力
 * “一见”多模态对话模型是SEEChat的开源版本，语言模型部分基于中文[ChatGLM6B](https://github.com/THUDM/ChatGLM-6B)
-* 代码内部安审中，即将开源，敬请期待！
 
 ## 能力展示
 ### 1. 多轮视觉问答、代码生成、目标分类
@@ -45,15 +44,15 @@ sh demo_stage2.sh
 
 启动后，即将开始一轮对话。当命令行显示“question”时，用户可以在终端输入问题，由seechat回答。当输入“break”时，本轮对话结束，进行下一轮对话。
 实测效果如下：
-<img src="./doc/img/round_dialog.png" alt= “round” width="1650" height="260">
+<img src="./doc/img/round_dialog.png" alt= “round” width="1650" height="160">
 
 
 ## 相关工作
 ### 中文
-* [X-LLM](https://x-llm.github.io/): 5月7日公开，由中科院自动化所研发的中文多模态对话模型
-* [VisualGLM](https://github.com/THUDM/VisualGLM-6B): 5月18日公开，由清华大学KEG组研发的中文多模态对话模型
-* [mPLUG-Owl](https://github.com/X-PLUG/mPLUG-Owl): 4月26日公开，由阿里达摩院发布了一个基于预训练和微调的多模态大模型
+* [X-LLM](https://x-llm.github.io/): 5月7日公开，中科院自动化所
+* [VisualGLM](https://github.com/THUDM/VisualGLM-6B): 5月18日公开，清华大学KEG组
+* [mPLUG-Owl](https://github.com/X-PLUG/mPLUG-Owl): 4月26日公开，阿里达摩院
 ### 英文
-* [BLIP-2](https://github.com/salesforce/LAVIS): salesforce公司开源的多模态模型
-* [LLaVA](https://github.com/haotian-liu/LLaVA): 4月17日公开，由威斯康星大学麦迪逊分校，微软研究院和哥伦比亚大学发布的指令微调模型
-* [MiniGPT-4](https://github.com/Vision-CAIR/MiniGPT-4): 4月19日，由King Abdullah University of Science and Technology的多模态对话模型
+* [BLIP-2](https://github.com/salesforce/LAVIS): 1月30日公开，Salesforce
+* [LLaVA](https://github.com/haotian-liu/LLaVA): 4月17日公开，威斯康星大学麦迪逊分校，微软研究院和哥伦比亚大学
+* [MiniGPT-4](https://github.com/Vision-CAIR/MiniGPT-4): 4月19日公开，King Abdullah University of Science and Technology
