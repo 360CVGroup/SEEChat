@@ -21,6 +21,7 @@ torch.manual_seed(seed)
 cudnn.benchmark = False
 cudnn.deterministic = True
 
+
 def parse_args():
     parser = argparse.ArgumentParser(description="Demo")
     parser.add_argument("--cfg-path", default="eval_configs/seechat_eval.yaml", help="path to configuration file.")
@@ -63,9 +64,7 @@ if __name__ == "__main__":
     before = "###Human: <Img>"
     before_ids = model.llama_tokenizer([before], return_tensors="pt", add_special_tokens=False)["input_ids"]
     before_embed = model.llama_model.transformer.word_embeddings(before_ids.to(device))
-
-    first_prompt = "详细描述这张图片"
-    first_after = "</Img> %s ###Assistant: " % first_prompt
+    first_after = "</Img> 详细描述这张图片 ###Assistant: "
 
     gen_kwargs = {
         "max_new_tokens": 512,
@@ -73,7 +72,7 @@ if __name__ == "__main__":
         "do_sample": False,
         "min_length": 1,
         "top_p": 0.9,
-        "temperature": 1.0,
+        "temperature": 0.8,
         "repetition_penalty": 1.0,
         "length_penalty": 1.0
     }
@@ -83,79 +82,79 @@ if __name__ == "__main__":
     for image_name in tqdm(image_names):
         path = os.path.join(img_root, image_name)
         print(path)
+
         image = Image.open(path).convert("RGB")
         image = vis_processor(image).unsqueeze(0).to(device)
         image_embed, _ = model.encode_img(image)
 
-        caption = ""
-
         loop = 0
-        # while True:
-        if loop == 0:
-            after = first_after
-        else:
-            try:
-#                     prompt = input("question: ")
-                prompt = "详细描述这张图片"
-                if prompt == "break":
-                    break
-            except:
-                continue
-            after = first_after + caption + "###Human: " + prompt + " ###Assistant: "
-
-        t1 = time()
-
-        image_ids = torch.zeros([1, 32])
-        after_ids = model.llama_tokenizer([after], return_tensors="pt")["input_ids"]
-        after_embed = model.llama_model.transformer.word_embeddings(after_ids.to(device))
-        input_ids = torch.cat([before_ids, image_ids, after_ids], dim=1).long().to(device)
-        inputs_embeds = torch.cat([before_embed, image_embed, after_embed], dim=1)
-
-        gen_kwargs.update({"input_ids": input_ids, "inputs_embeds": inputs_embeds})
-
-        if use_stream:
-            answer = ""
-            print("answer: ", end='')
-            for outs in model.llama_model.stream_generate(**gen_kwargs):
-                cur_token = outs.tolist()[0][-1]
-                cur_answer = model.llama_tokenizer.decode([cur_token])
-                answer += cur_answer
-                print(cur_answer, end='')
-                sys.stdout.flush()
-            print()
+        history = first_after
+        while True:
+            torch.cuda.empty_cache()
 
             if loop == 0:
-                caption = answer
-
-        else:
-            prefix_len = inputs_embeds.shape[1]
-            out_token = model.llama_model.generate(**gen_kwargs).tolist()[0]
-            answer1 = model.llama_tokenizer.decode(out_token[prefix_len:])
-            print("answer1: ", answer1)
-            answer1 = answer1.replace(",", "，")
-            answer1 = answer1.replace("Human:", "")
-            answer1 = answer1.replace("<Img>", "")
-            answer1 = answer1.replace("</Img>", "")
-            answer1 = answer1.replace(" ", "")
-            answer2 = answer1.split('###')[0]
-            answer2 = answer2.split('Assistant:')[-1].strip()
-            if answer2 == '':
-                answer1 = answer1.replace("###", "")
-                answer1 = answer1.replace("Assistant:", "")
-                answer1 = answer1.strip()
-                answer = answer1
+                after = first_after
             else:
-                answer = answer2
+                try:
+                    prompt = input("question: ")
+                    if prompt == "break":
+                        break
+                except:
+                    continue
+                after = history + "###Human: " + prompt + " ###Assistant: "
 
-            print("answer2: ", answer)
-            print("*"*50)
+            if len(after) > 2000:
+                history = first_after
+                after = first_after
+
+            t1 = time()
+
+            image_ids = torch.zeros([1, 32])
+            after_ids = model.llama_tokenizer([after], return_tensors="pt")["input_ids"]
+            after_embed = model.llama_model.transformer.word_embeddings(after_ids.to(device))
+            input_ids = torch.cat([before_ids, image_ids, after_ids], dim=1).long().to(device)
+            inputs_embeds = torch.cat([before_embed, image_embed, after_embed], dim=1)
+
+            gen_kwargs.update({"input_ids": input_ids, "inputs_embeds": inputs_embeds})
+
+            if use_stream:
+                answer = ""
+                print("answer: ", end='')
+                for outs in model.llama_model.stream_generate(**gen_kwargs):
+                    cur_token = outs.tolist()[0][-1]
+                    cur_answer = model.llama_tokenizer.decode([cur_token])
+                    answer += cur_answer
+                    print(cur_answer, end='')
+                    sys.stdout.flush()
+                print()
+            else:
+                prefix_len = inputs_embeds.shape[1]
+                out_token = model.llama_model.generate(**gen_kwargs).tolist()[0]
+                answer1 = model.llama_tokenizer.decode(out_token[prefix_len:])
+                answer1 = answer1.replace(",", "，")
+                answer1 = answer1.replace("Human:", "")
+                answer1 = answer1.replace("<Img>", "")
+                answer1 = answer1.replace("</Img>", "")
+                answer1 = answer1.replace(" ", "")
+                answer2 = answer1.split('###')[0]
+                answer2 = answer2.split('Assistant:')[-1].strip()
+                if answer2 == '':
+                    answer1 = answer1.replace("###", "")
+                    answer1 = answer1.replace("Assistant:", "")
+                    answer1 = answer1.strip()
+                    answer = answer1
+                else:
+                    answer = answer2
+
+                print("answer: ", answer)
 
             if loop == 0:
-                caption = answer
+                history += answer
+            else:
+                temp = "###Human: " + prompt + " ###Assistant: " + answer
+                history += temp
 
-        t2 = time()
-        print("%.1fs" % (t2 - t1))
+            t2 = time()
+            print("%.1fs" % (t2 - t1))
 
-        loop += 1
-#             break
-# pdb.set_trace()
+            loop += 1
