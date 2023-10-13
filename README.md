@@ -1,58 +1,30 @@
-# SEEChat - 一见多模态对话模型
-* “一见”取义自“百闻不如一见”，是一个侧重视觉能力的多模态对话大模型，基于单模态专家缝合路线（Single-modal Experts Efficient integration, SEEChat）。
-* SEEChat项目的重点是将视觉能力与文本对话能力相集成，长期目标是赋予模型以文本/对话的方式解决视觉任务（图像理解，目标检测，跨模态，开放集）的能力
-* “一见”多模态对话模型是SEEChat的开源版本，语言模型部分基于中文[ChatGLM6B](https://github.com/THUDM/ChatGLM-6B)
+# SEEChat 2.0 视觉多模态模型
+SEEChat 2.0主要变化：
+1. **目标定位**：新增目标定位能力，能根据用户的描述给出对应目标在图像中的bounding box坐标    
+2. **深层融合**：模型结构从浅层融合切换为深层融合，提升模型对视觉信息的理解能力    
+3. **严格超集**：LLM保持frozen，视觉能力的加入不影响内嵌的语言模型在文本任务上的原有能力    
 
-## 能力展示
-### 1. 多轮视觉问答、代码生成、目标分类
-<img src="./doc/img/SEEChat-demo1.png" alt= “SEEChat-demo1” width="800" height="900">
+## Contents
+  - [Introduction](#introduction)
+  - [Method](#method)
+  - [Capability](#capability)
+  - [Deploy](#deploy)
+  - [Citation](#citation)
+  - [References](#references)
 
-### 2. Image Captioning
-<img src="./doc/img/captionwinrate.png" alt= “caption-win-rate” width="530" height="400">
+## Introduction
+SEEChat 是一个侧重视觉能力的多模态对话模型，目标包含三方面：    
+1. 为文本单模态的语言模型增加对视觉信息的理解和处理能力，为LLM增加“眼睛”    
+2. 基于多模态融合，实现视觉多任务的统一模型    
+3. 探索视觉与文本信息的对齐、转写、及信息互补    
 
-* 从中文[Zero](https://zero.so.com)数据集中随机选取1000张中文互联网图像，已排除训练集数据
-* 使用[ChineseCLIP](https://github.com/OFA-Sys/Chinese-CLIP)计算图文相关性得分
-* 上图为七种公开方法（原生的互联网文本做为其中一种）的图文相关性得分胜出情况
-* SEEChat胜出率甚至大比例超过原生文本
+## Method
+SEEChat 2.0仍然基于单模态专家缝合路线，而非原生多模态路线。与1.0版本的重大区别在于，2.0版的模型结构从1.0版的浅层融合切换为现在的深层融合方式。    
 
-## 技术方案
-SEEChat基于单模态专家缝合路线，通过可学习的桥接层将视觉模态的专家模型与文本模态的专家模型进行缝合，形成具备视觉理解能力的多模态对话模型。
+## Capability
 
-<img src="./doc/img/MLLM model structure.png" alt= “MLLMmodel” width="550" height="200">
+## Deploy
 
-开源V1.0版本的SEEChat，视觉模态基于CLIP-ViT，文本模态基于ChatGLM，可学习的桥接层参考[BLIP-2](https://arxiv.org/abs/2301.12597)以及[LLAVA](https://llava-vl.github.io/)等前期工作，进行如下的两阶段训练：
-* Stage I 图文对齐: 使用360人工智能研究院开源的[Zero](https://zero.so.com)数据集，共计2300万图文对桥接层进行训练
-* Stage II 人机对齐：使用[LLAVA](https://llava-vl.github.io/)开源的158K instruction数据经翻译后，对桥接层和语言模型部分进行微调
+## Citation
 
-
-## 使用说明
-### 硬件说明
-GPU要求3090或者A100
-### 环境安装
-conda env create -f environment.yml  
-
-## 模型与数据
-### 模型下载
-从[这里](https://huggingface.co/THUDM/chatglm-6b/tree/main)下载chatGLM所有的bin文件和ice\_text.model，放于目录models/chatglm-6b中。  
-从[百度云盘](https://pan.baidu.com/s/18-_f_O5a-W1dJBWsbpmAGw )下载权重文件checkpoint_100.pth，放于目录models/chatglm-6b中。其中提取码为 qiho 
-
-### 运行推理脚本
-进入到目录：
-cd code  
-运行启动脚本：
-sh demo_stage2.sh
-
-启动后，即将开始一轮对话。当命令行显示“question”时，用户可以在终端输入问题，由seechat回答。当输入“break”时，本轮对话结束，进行下一轮对话。
-实测效果如下：
-<img src="./doc/img/round_dialog.png" alt= “round” width="1650" height="160">
-
-
-## 相关工作
-### 中文
-* [X-LLM](https://x-llm.github.io/): 5月7日公开，中科院自动化所
-* [VisualGLM](https://github.com/THUDM/VisualGLM-6B): 5月18日公开，清华大学KEG组
-* [mPLUG-Owl](https://github.com/X-PLUG/mPLUG-Owl): 4月26日公开，阿里达摩院
-### 英文
-* [BLIP-2](https://github.com/salesforce/LAVIS): 1月30日公开，Salesforce
-* [LLaVA](https://github.com/haotian-liu/LLaVA): 4月17日公开，威斯康星大学麦迪逊分校，微软研究院和哥伦比亚大学
-* [MiniGPT-4](https://github.com/Vision-CAIR/MiniGPT-4): 4月19日公开，King Abdullah University of Science and Technology
+## References
