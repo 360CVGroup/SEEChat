@@ -2,6 +2,7 @@
 * “一见”取义自“百闻不如一见”，是一个侧重视觉能力的多模态对话大模型，基于单模态专家缝合路线（Single-modal Experts Efficient integration, SEEChat）。
 * SEEChat项目的重点是将视觉能力与文本对话能力相集成，长期目标是赋予模型以文本/对话的方式解决视觉任务（图像理解，目标检测，跨模态，开放集）的能力
 * “一见”多模态对话模型是SEEChat的开源版本，语言模型部分基于中文[ChatGLM6B](https://github.com/THUDM/ChatGLM-6B)
+* 2024-5-17：我们的新一代多模态模型更名为360VL，并在Github和Haggingface开源发布（https://github.com/360CVGroup/360VL）
 
 ## 能力展示
 ### 1. 多轮视觉问答、代码生成、目标分类
