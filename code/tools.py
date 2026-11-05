@@ -77,7 +77,7 @@ class CALL():
         image = Image.open(
             requests.get(
                 image_url,
-                stream=True
+                stream=True, timeout=30
             ).raw
         ).convert('RGB')
         image = self.vis_processor(image).unsqueeze(0).to(self.device)
